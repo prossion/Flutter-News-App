@@ -1,11 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/src/blocs/auth/auth_bloc.dart';
-import 'package:flutter_news_app/src/blocs/auth/auth_events.dart';
-import 'package:flutter_news_app/src/blocs/auth/auth_state.dart';
-import 'package:flutter_news_app/src/screens/home_screen.dart';
-import 'package:flutter_news_app/src/screens/sign_in.dart';
+import 'package:flutter_news_app/src/blocs/blocs.dart';
+import 'package:flutter_news_app/src/screens/screens.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);

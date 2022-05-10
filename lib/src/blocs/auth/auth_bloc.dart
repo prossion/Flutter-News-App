@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/src/blocs/auth/auth_events.dart';
-import 'package:flutter_news_app/src/blocs/auth/auth_state.dart';
-import 'package:flutter_news_app/src/repositories/auth_repository.dart';
+import 'package:flutter_news_app/src/blocs/blocs.dart';
+import 'package:flutter_news_app/src/repositories/repositories.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;

@@ -9,8 +9,8 @@ class Articles {
   final String publishedDate;
   final String link;
   final String excerpt;
+  final String topic;
   final String summary;
-  final String authors;
   final String media;
   final String rights;
 
@@ -20,9 +20,14 @@ class Articles {
     required this.publishedDate,
     required this.link,
     required this.excerpt,
+    required this.topic,
     required this.summary,
-    required this.authors,
     required this.media,
     required this.rights,
   });
+
+  factory Articles.fromJson(Map<String, dynamic> json) =>
+      _$ArticlesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ArticlesToJson(this);
 }
