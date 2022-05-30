@@ -10,3 +10,5 @@ export 'news/news_state.dart';
 export 'search/search_bloc.dart';
 export 'search/search_events.dart';
 export 'search/search_state.dart';
+// theme app
+export 'theme/theme_cubit.dart';

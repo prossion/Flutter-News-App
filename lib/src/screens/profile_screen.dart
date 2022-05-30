@@ -1,14 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_news_app/config/app_theme.dart';
 import 'package:flutter_news_app/src/blocs/blocs.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+    void toggleSwitch(bool value) {
+      setState(() {
+        context.read<ThemeCubit>().switchTheme();
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -37,16 +49,12 @@ class ProfileScreen extends StatelessWidget {
                   ? Text(
                       "${user.displayName}",
                       style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400),
+                          fontSize: 20, fontWeight: FontWeight.w400),
                     )
                   : const Text(
                       'Your name',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
               const SizedBox(
                 height: 10,
@@ -62,6 +70,21 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () {
                   context.read<AuthBloc>().add(SignOutRequested());
                 },
+              ),
+              const Divider(),
+              Row(
+                children: [
+                  const Text('Change theme mode',
+                      style: TextStyle(fontSize: 20)),
+                  const Spacer(),
+                  Switch.adaptive(
+                      activeColor: Colors.grey,
+                      value: context.read<ThemeCubit>().state ==
+                              AppThemes.lightTheme
+                          ? true
+                          : false,
+                      onChanged: toggleSwitch),
+                ],
               ),
             ],
           ),

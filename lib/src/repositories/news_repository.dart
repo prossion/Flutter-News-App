@@ -6,7 +6,8 @@ class NewsRepository {
 
   NewsRepository({required this.newsService});
 
-  Future<List<Articles>> getNews(page) => newsService.getNewses(page);
-
   Future<List<Articles>> searchNews(query) => newsService.searchNewses(query);
+
+  Future<List<Articles>> getNews(category, page) =>
+      newsService.getNews(category, page);
 }

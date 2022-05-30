@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/src/models/models.dart';
 import 'package:flutter_news_app/src/screens/screens.dart';
+import 'package:intl/intl.dart';
 
 class SearchResult extends StatelessWidget {
   final Articles newsResult;
@@ -9,6 +10,7 @@ class SearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = newsResult.pubDate;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -28,7 +30,7 @@ class SearchResult extends StatelessWidget {
           children: [
             SizedBox(
               child: CachedNetworkImage(
-                imageUrl: newsResult.media,
+                imageUrl: newsResult.imageUrl,
                 placeholder: (context, url) => const Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -51,9 +53,9 @@ class SearchResult extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(newsResult.publishedDate == null
+                child: Text(date == null
                     ? ''
-                    : newsResult.publishedDate),
+                    : DateFormat.yMd().add_jm().format(date).toString()),
               ),
             ),
           ],

@@ -1,14 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/src/blocs/blocs.dart';
+import 'package:flutter_news_app/src/blocs/news/news_events.dart';
+import 'package:flutter_news_app/src/blocs/news/news_state.dart';
 import 'package:flutter_news_app/src/models/models.dart';
 import 'package:flutter_news_app/src/repositories/repositories.dart';
 
-class NewsBloc extends Bloc<NewsEvents, NewsState> {
-  final NewsRepository newsRepository;
+class NewsBloc extends Bloc<NewsEvent, NewsState> {
+  final NewsRepository repository;
   int page = 1;
+  bool isFetching = false;
 
-  NewsBloc({required this.newsRepository}) : super(NewsInitState()) {
-    on<NewsFetched>((event, emit) async {
+  NewsBloc({required this.repository}) : super(NewsInitial()) {
+    on<NewsFetchEvent>((event, emit) async {
       if (state is NewsLoadingState) return;
 
       final currentState = state;
@@ -20,12 +22,16 @@ class NewsBloc extends Bloc<NewsEvents, NewsState> {
 
       emit(NewsLoadingState(oldNews, isFirstFetch: page == 1));
 
-      await newsRepository.getNews(page).then((newPosts) {
+      await repository.getNews(event.category, page).then((newPosts) {
         page++;
         final posts = (state as NewsLoadingState).oldArticles;
         posts.addAll(newPosts);
         emit(NewsLoadedState(posts));
       });
     });
+    on<ChangeCategoryTopNewsFetchEvent>(((event, emit) {
+      emit(NewsChangedCategoryState(
+          indexCategorySelected: event.indexCategorySelected));
+    }));
   }
 }

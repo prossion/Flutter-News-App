@@ -2,22 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/src/blocs/blocs.dart';
 import 'package:flutter_news_app/src/screens/screens.dart';
-import 'package:flutter_news_app/src/widgets/widgets.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
-  static const List<Widget> screens = <Widget>[
-    NewsScreen(),
-    // SearchScreen(),
-    ProfileScreen()
-  ];
+  static const List<Widget> screens = <Widget>[HomeScreen(), ProfileScreen()];
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
@@ -30,33 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title:
-              const Text('Flutter News', style: TextStyle(color: Colors.black)),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                showSearch(context: context, delegate: CustomSearchDelegate());
-              },
-              icon: const Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
         body: screens[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
           onTap: (index) => setState(() => currentIndex = index),
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.search),
-            //   label: 'Search',
-            // ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),
