@@ -63,7 +63,7 @@ class CustomSearchDelegate extends SearchDelegate {
         } else if (state is SearchError) {
           return const AlertDialog(
             title: Text('Ooops...'),
-            content: Text('Error!'),
+            content: Text('Error! Please try now!'),
           );
         }
         return Container();

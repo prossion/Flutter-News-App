@@ -92,24 +92,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<NewsBloc, NewsState>(
       builder: (context, state) {
         List<Articles> newsList = [];
-        bool isLoading = false;
         if (state is NewsLoadingState && state.isFirstFetch) {
           refreshIndicatorState.currentState!.show();
         } else if (state is NewsLoadingState) {
           newsList = state.oldArticles;
         } else if (state is NewsLoadedState) {
           newsList = state.newsList;
+        } else if (state is NewsError) {
+          return const AlertDialog(
+            title: Text('Ooops...'),
+            content: Text('Unexpected Error, try now!'),
+          );
         }
         return Stack(
           children: <Widget>[
             RefreshIndicator(
               key: refreshIndicatorState,
               onRefresh: () {
-                BlocProvider.of<NewsBloc>(context).add(NewsFetchEvent(
+                BlocProvider.of<NewsBloc>(context).add(
+                  NewsFetchEvent(
                     category: listCategories[indexSelectedCategory]
                         .title
-                        .toLowerCase()));
-
+                        .toLowerCase(),
+                  ),
+                );
                 return completerRefresh.future;
               },
               child: ListView.separated(
@@ -131,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 separatorBuilder: (context, builder) {
                   return Container();
                 },
-                itemCount: newsList.length + (isLoading ? 1 : 0),
+                itemCount: newsList.length,
               ),
             ),
           ],

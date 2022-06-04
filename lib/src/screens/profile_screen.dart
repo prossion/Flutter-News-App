@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/config/app_theme.dart';
 import 'package:flutter_news_app/src/blocs/blocs.dart';
+import 'package:flutter_picker/flutter_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -12,6 +19,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String country = '';
+
+  Future initStateCustome() async {
+    SharedPreferences prefs = await _prefs;
+    country = prefs.getString('country')!;
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -71,25 +85,123 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   context.read<AuthBloc>().add(SignOutRequested());
                 },
               ),
-              const Divider(),
-              Row(
-                children: [
-                  const Text('Change theme mode',
-                      style: TextStyle(fontSize: 20)),
-                  const Spacer(),
-                  Switch.adaptive(
-                      activeColor: Colors.grey,
-                      value: context.read<ThemeCubit>().state ==
-                              AppThemes.lightTheme
-                          ? true
-                          : false,
-                      onChanged: toggleSwitch),
-                ],
+              const Padding(
+                padding: EdgeInsets.only(top: 8.0, left: 5.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('Settings', style: TextStyle(fontSize: 22)),
+                ),
               ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Row(
+                  children: [
+                    const Text('Change theme mode',
+                        style: TextStyle(fontSize: 20)),
+                    const Spacer(),
+                    Switch.adaptive(
+                        activeColor: Colors.grey,
+                        value: context.read<ThemeCubit>().state ==
+                                AppThemes.lightTheme
+                            ? true
+                            : false,
+                        onChanged: toggleSwitch),
+                  ],
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                title:
+                    const Text('News country', style: TextStyle(fontSize: 20)),
+                trailing: Text(country),
+                onTap: () => showPickerArray(context),
+              ),
+              const Divider(),
+              // DropdownButton(
+              //   // Initial Value
+              //   value: selected,
+
+              //   // Down Arrow Icon
+              //   icon: const Icon(Icons.keyboard_arrow_down),
+
+              //   // Array list of items
+              //   items: countries.map((String countries) {
+              //     return DropdownMenuItem(
+              //       value: countries,
+              //       child: Text(countries),
+              //     );
+              //   }).toList(),
+              //   // After selecting the desired option,it will
+              //   // change button value to selected value
+              //   onChanged: (String? newValue) {
+              //     setState(() {
+              //       selected = newValue!;
+              //     });
+              //   },
+              // )
             ],
           ),
         ),
       ),
     );
   }
+
+  showPickerArray(BuildContext context) async {
+    SharedPreferences prefs = await _prefs;
+    String country = prefs.getString('country') ?? '';
+    int selected = 0;
+    Color? textStyle = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white54
+        : Colors.grey[800];
+    Color? backgroundColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey[800]
+        : Colors.white54;
+
+    if (country == 'USA') {
+      selected = 0;
+    } else if (country == 'United Kingdom') {
+      selected = 1;
+    } else if (country == 'Germany') {
+      selected = 2;
+    } else if (country == 'France') {
+      selected = 3;
+    } else if (country == 'Ukraine') {
+      selected = 4;
+    } else if (country == 'Poland') {
+      selected = 5;
+    }
+
+    Picker(
+        selecteds: [selected],
+        textStyle: TextStyle(color: textStyle, fontSize: 24),
+        backgroundColor: backgroundColor,
+        adapter: PickerDataAdapter<String>(
+            pickerdata: const JsonDecoder().convert(pickerCountry),
+            isArray: true),
+        hideHeader: true,
+        title: const Text("Please Select"),
+        onConfirm: (Picker picker, List value) {
+          prefs.setString(
+              'country',
+              picker
+                  .getSelectedValues()
+                  .toString()
+                  .replaceAll('[', '')
+                  .replaceAll(']', ''));
+        }).showDialog(context);
+  }
 }
+
+const pickerCountry = '''
+[
+    [ 
+        "USA",
+        "United Kingdom",
+        "Germany",
+        "France",
+        "Ukraine",
+        "Poland"
+    ]
+]
+    ''';

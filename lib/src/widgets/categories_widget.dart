@@ -31,7 +31,7 @@ class _WidgetCategoryNewsState extends State<WidgetCategoryNews> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
-      child: Container(
+      child: SizedBox(
         height: 74,
         child: ListView.builder(
           shrinkWrap: true,
@@ -84,8 +84,10 @@ class _WidgetCategoryNewsState extends State<WidgetCategoryNews> {
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
                                 image: indexCategorySelected == index
-                                    ? AssetImage(itemCategory.image
-                                        .replaceAll('_white', ''))
+                                    ? AssetImage(
+                                        itemCategory.image
+                                            .replaceAll('_white', ''),
+                                      )
                                     : AssetImage(itemCategory.image),
                                 fit: BoxFit.fill,
                               ),
@@ -96,7 +98,7 @@ class _WidgetCategoryNewsState extends State<WidgetCategoryNews> {
                   Text(
                     itemCategory.title,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: indexCategorySelected == index ? 14 : 12,
                       fontWeight: indexCategorySelected == index
                           ? FontWeight.bold
                           : FontWeight.normal,

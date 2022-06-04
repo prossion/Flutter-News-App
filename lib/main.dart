@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => NewsBloc(repository: newsRepository)
-              ..add(NewsFetchEvent(category: 'world')),
+              ..add(NewsFetchEvent(category: 'top')),
           ),
           // If Android/IOS theme of the device is light, start app with light theme,
           // else start app with dark theme
@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
         ],
         child: BlocBuilder<ThemeCubit, ThemeData>(builder: (context, state) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             theme: state,
             home: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, prefer_if_null_operators
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/src/models/models.dart';
@@ -35,10 +37,8 @@ class NewsCard extends StatelessWidget {
                           topRight: Radius.circular(15)),
                       child: CachedNetworkImage(
                         imageUrl: news.imageUrl,
-                        placeholder: (context, url) => const SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: CircularProgressIndicator()),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
                         errorWidget: (context, url, error) => const Image(
                           image: AssetImage('assets/icons/icon_error.png'),
                         ),
@@ -62,8 +62,8 @@ class NewsCard extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(
+                        top: 8.0, left: 8.0, bottom: 8.0, right: 2.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(date == null
@@ -71,23 +71,35 @@ class NewsCard extends StatelessWidget {
                           : DateFormat.yMd().add_jm().format(date).toString()),
                     ),
                   ),
-                  // news.creator != null
-                  //     ? const Padding(
-                  //         padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  //         child: SizedBox(
-                  //           height: 15,
-                  //           width: 2,
-                  //         ),
-                  //       )
-                  //     : Container(),
-                  // Expanded(
-                  //   child: Text(
-                  //     news.creator == null ? '' : 'News from: ${news.creator}',
-                  //     overflow: TextOverflow.fade,
-                  //     maxLines: 1,
-                  //     softWrap: false,
-                  //   ),
-                  // ),
+                  news.creator != null
+                      ? Container(
+                          color: Colors.black,
+                          width: 1,
+                          height: 11,
+                        )
+                      : const Divider(),
+                  news.creator != null
+                      ? const Padding(
+                          padding:
+                              EdgeInsets.only(left: 1.0, top: 8.0, bottom: 8.0),
+                          child: SizedBox(
+                            height: 15,
+                            width: 2,
+                          ),
+                        )
+                      : const Divider(),
+                  Expanded(
+                    child: Text(
+                      news.creator == null
+                          ? ''
+                          : 'News from: ${news.creator}'
+                              .replaceAll('[', '')
+                              .replaceAll(']', ''),
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ),
                 ],
               ),
             ],

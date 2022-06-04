@@ -41,11 +41,12 @@ dependencies:
   email_validator: '^1.0.6'
   cached_network_image: ^3.2.1
   intl: ^0.17.0
-  flutter_secure_storage: ^5.0.2
+  shared_preferences: ^2.0.15
   flutter_bloc: ^8.0.1
   http: ^0.13.4
   equatable: ^2.0.3
   json_annotation: ^4.4.0
+  flutter_picker: ^2.0.3
 
 dev_dependencies:
   flutter_test:
