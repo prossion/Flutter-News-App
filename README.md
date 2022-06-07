@@ -5,22 +5,14 @@
 The application will display breaking news using the [NEWSDATA](https://newsdata.io/)
 
 # Technology
-1. Flutter Bloc 
-      Flutter Widgets that make it easy to implement the BLoC (Business Logic Component) design pattern.
+1. Flutter Bloc    
 3. Firebase Auth 
-  Flutter plugin for Firebase Auth, enabling Android and iOS authentication using passwords, phone numbers and identity providers like Google, Facebook and Twitter.
-3. Cached Network Image
-  Flutter library to load and cache network images. Can also be used with placeholder and error widgets.
+3. Cached Network Image 
 4. Shared Preferences
-  Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android.
-5. Http
-  A composable, multi-platform, Future-based API for HTTP requests.
+5. Http 
 6. Equatable
-  A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
 7. Google Sign In
-  Flutter plugin for Google Sign-In, a secure authentication system for signing in with a Google account on Android and iOS.
-8. Picker 
-  Flutter plugin for selecting images from the Android and iOS, taking new pictures with the camera and saves on Gallery
+8. Picker
 
 ## Getting Started!
 
