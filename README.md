@@ -3,7 +3,7 @@
 The application will display breaking news using the [NEWSDATA](https://newsdata.io/)
 
 # App Screenshot
-[fjfgjfgjfj](https://user-images.githubusercontent.com/67923348/172368946-838d72ee-719f-4d53-ab99-a5425482833e.jpg)
+https://user-images.githubusercontent.com/67923348/172368946-838d72ee-719f-4d53-ab99-a5425482833e.jpg
 
 # Technology
 1.Flutter Bloc
