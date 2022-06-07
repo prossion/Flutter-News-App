@@ -5,7 +5,7 @@
 The application will display breaking news using the [NEWSDATA](https://newsdata.io/)
 
 # Technology
-1. Flutter Bloc    Flutter Widgets that make it easy to implement the BLoC (Business Logic Component) design pattern.
+1. Flutter Bloc    +Flutter Widgets that make it easy to implement the BLoC (Business Logic Component) design pattern.
 3. Firebase Auth 
   Flutter plugin for Firebase Auth, enabling Android and iOS authentication using passwords, phone numbers and identity providers like Google, Facebook and Twitter.
 3. Cached Network Image
