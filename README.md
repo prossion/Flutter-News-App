@@ -1,8 +1,7 @@
 # Flutter-News
+The application will display breaking news using the [NEWSDATA](https://newsdata.io/)
 # App Screenshot
 ![fjfgjfgjfj](https://user-images.githubusercontent.com/67923348/172371173-7883bad4-3bd6-4c75-9ee8-6c936a512dc9.jpg)
-
-The application will display breaking news using the [NEWSDATA](https://newsdata.io/)
 
 # Technology
 1. Flutter Bloc    
