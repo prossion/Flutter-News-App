@@ -58,6 +58,9 @@ class NewsService {
       throw Exception("Unauthorized");
     } else if (response.statusCode == 500) {
       throw Exception("Server Error");
+    } else if (response.body.isEmpty) {
+      throw Exception(
+          "There is no news in this category,\n choose another or change the country");
     } else {
       throw Exception("Something does wen't wrong");
     }

@@ -29,7 +29,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SignIn'),
+        title: const Text('Sign In'),
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {

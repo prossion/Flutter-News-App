@@ -89,6 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildWidgetContent() {
+    void _showDialog() {
+      Future.delayed(Duration(seconds: 2), () {
+        showDialog(
+            context: context,
+            builder: (_) => SimpleDialog(
+                  title: Text('Have a nice day'),
+                  children: [Text('Happy coding with Flutter')],
+                  contentPadding: EdgeInsets.all(25),
+                ));
+      });
+    }
+
     return BlocBuilder<NewsBloc, NewsState>(
       builder: (context, state) {
         List<Articles> newsList = [];
@@ -99,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (state is NewsLoadedState) {
           newsList = state.newsList;
         } else if (state is NewsError) {
-          return const AlertDialog(
-            title: Text('Ooops...'),
-            content: Text('Unexpected Error, try now!'),
+          return AlertDialog(
+            title: const Text('Ooops...'),
+            content: Text(state.message),
           );
         }
         return Stack(
@@ -140,6 +152,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: newsList.length,
               ),
             ),
+            newsList.isEmpty || state is NewsError
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'News is downloaded, if you have not seen the news, select the another category or change the country in the settings',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
           ],
         );
       },

@@ -29,7 +29,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
           emit(NewsLoadedState(posts));
         });
       } catch (e) {
-        emit(NewsError());
+        emit(const NewsError('Unexpected Error! Please Try now!'));
         rethrow;
       }
     });

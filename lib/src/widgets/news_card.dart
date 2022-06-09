@@ -63,7 +63,7 @@ class NewsCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                        top: 8.0, left: 8.0, bottom: 8.0, right: 2.0),
+                        top: 8.0, left: 8.0, bottom: 8.0, right: 4.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(date == null
@@ -73,7 +73,7 @@ class NewsCard extends StatelessWidget {
                   ),
                   news.creator != null
                       ? Container(
-                          color: Colors.black,
+                          color: Colors.black45,
                           width: 1,
                           height: 11,
                         )
@@ -84,7 +84,7 @@ class NewsCard extends StatelessWidget {
                               EdgeInsets.only(left: 1.0, top: 8.0, bottom: 8.0),
                           child: SizedBox(
                             height: 15,
-                            width: 2,
+                            width: 3,
                           ),
                         )
                       : const Divider(),
@@ -92,7 +92,7 @@ class NewsCard extends StatelessWidget {
                     child: Text(
                       news.creator == null
                           ? ''
-                          : 'News from: ${news.creator}'
+                          : '${news.creator}'
                               .replaceAll('[', '')
                               .replaceAll(']', ''),
                       overflow: TextOverflow.fade,

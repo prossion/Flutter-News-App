@@ -38,4 +38,8 @@ class NewsChangedCategoryState extends NewsState {
   List<Object?> get props => [indexCategorySelected];
 }
 
-class NewsError extends NewsState {}
+class NewsError extends NewsState {
+  final String message;
+
+  const NewsError(this.message);
+}
