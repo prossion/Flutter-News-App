@@ -155,7 +155,6 @@ class DetailScreen extends StatelessWidget {
                                     fontSize: 17, fontWeight: FontWeight.w400),
                               ),
                       ),
-                      const Divider(),
                     ],
                   ),
                 ),
