@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/src/blocs/blocs.dart';
 import 'package:flutter_news_app/src/models/models.dart';
 import 'package:flutter_news_app/src/widgets/error_display.dart';
 import 'package:flutter_news_app/src/widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -71,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Column(
             children: [
+              WidgetDateToday(),
               WidgetCategoryNews(
                   listCategories: listCategories,
                   indexDefaultSelected: indexSelectedCategory),
@@ -148,6 +151,57 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         );
       },
+    );
+  }
+}
+
+class WidgetDateToday extends StatefulWidget {
+  const WidgetDateToday({Key? key}) : super(key: key);
+
+  @override
+  _WidgetDateTodayState createState() => _WidgetDateTodayState();
+}
+
+class _WidgetDateTodayState extends State<WidgetDateToday> {
+  late String strToday;
+
+  @override
+  void initState() {
+    strToday = DateFormat('EEEE, MMM dd, yyyy').format(DateTime.now());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+      child: Row(
+        children: [
+          user.photoURL != null
+              ? Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: CircleAvatar(
+                    radius: 20,
+                    child: ClipOval(child: Image.network("${user.photoURL}")),
+                  ),
+                )
+              : Image.asset(
+                  "assets/icons/profile_icon.png",
+                  width: 35,
+                  height: 35,
+                ),
+          const SizedBox(width: 8.0),
+          Text(
+            strToday,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
