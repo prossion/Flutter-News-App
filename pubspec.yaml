@@ -43,10 +43,12 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: ^2.0.15
   flutter_bloc: ^8.0.1
+  bloc_test: ^9.0.3
   http: ^0.13.4
   equatable: ^2.0.3
   json_annotation: ^4.4.0
   flutter_picker: ^2.0.3
+  delayed_display: ^2.0.0
 
 dev_dependencies:
   flutter_test:

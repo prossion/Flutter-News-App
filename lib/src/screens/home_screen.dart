@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/src/blocs/blocs.dart';
 import 'package:flutter_news_app/src/models/models.dart';
+import 'package:flutter_news_app/src/widgets/error_display.dart';
 import 'package:flutter_news_app/src/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -89,18 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildWidgetContent() {
-    void _showDialog() {
-      Future.delayed(Duration(seconds: 2), () {
-        showDialog(
-            context: context,
-            builder: (_) => SimpleDialog(
-                  title: Text('Have a nice day'),
-                  children: [Text('Happy coding with Flutter')],
-                  contentPadding: EdgeInsets.all(25),
-                ));
-      });
-    }
-
     return BlocBuilder<NewsBloc, NewsState>(
       builder: (context, state) {
         List<Articles> newsList = [];
@@ -153,21 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             newsList.isEmpty || state is NewsError
-                ? const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'News is downloaded, if you have not seen the news, select the another category or change the country in the settings',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                ? const ErrorDisplay(
+                    title: 'Failed loading news',
+                    text: 'Try again, or change the country in the settings')
                 : Container(),
           ],
         );
