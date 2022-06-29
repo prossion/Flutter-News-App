@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Column(
             children: [
-              WidgetDateToday(),
+              const WidgetDateToday(),
               WidgetCategoryNews(
                   listCategories: listCategories,
                   indexDefaultSelected: indexSelectedCategory),
@@ -102,10 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (state is NewsLoadedState) {
           newsList = state.newsList;
         } else if (state is NewsError) {
-          return AlertDialog(
-            title: const Text('Ooops...'),
-            content: Text(state.message),
-          );
+          return ErrorDisplay(title: 'Ooops...', text: state.message);
         }
         return Stack(
           children: <Widget>[
@@ -178,21 +176,24 @@ class _WidgetDateTodayState extends State<WidgetDateToday> {
       padding: const EdgeInsets.only(top: 8.0, left: 8.0),
       child: Row(
         children: [
-          user.photoURL != null
-              ? Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: CircleAvatar(
+              radius: 20,
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: '${user.photoURL}',
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Image(
+                    image: AssetImage('assets/icons/profile_icon.png'),
                   ),
-                  child: CircleAvatar(
-                    radius: 20,
-                    child: ClipOval(child: Image.network("${user.photoURL}")),
-                  ),
-                )
-              : Image.asset(
-                  "assets/icons/profile_icon.png",
-                  width: 35,
-                  height: 35,
                 ),
+              ),
+            ),
+          ),
           const SizedBox(width: 8.0),
           Text(
             strToday,

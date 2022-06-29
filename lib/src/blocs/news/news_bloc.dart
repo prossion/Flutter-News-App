@@ -29,7 +29,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
           emit(NewsLoadedState(posts));
         });
       } catch (e) {
-        emit(const NewsError('Unexpected Error! Please Try now!'));
+        emit(const NewsError(
+            'Unexpected Error! Check your Internet connection and try now!'));
         rethrow;
       }
     });

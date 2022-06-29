@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,18 +45,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Center(
           child: Column(
             children: [
-              user.photoURL != null
-                  ? Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Image.network("${user.photoURL}"),
-                    )
-                  : Image.asset(
-                      "assets/icons/profile_icon.png",
-                      width: 150,
-                      height: 150,
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: '${user.photoURL}',
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Image(
+                    image: AssetImage('assets/icons/profile_icon.png'),
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -89,7 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.only(top: 8.0, left: 5.0),
                 child: Align(
                   alignment: Alignment.topLeft,
-                  child: Text('Settings', style: TextStyle(fontSize: 22)),
+                  child: Text('Settings',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
                 ),
               ),
               const Divider(),
@@ -118,28 +124,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () => showPickerArray(context),
               ),
               const Divider(),
-              // DropdownButton(
-              //   // Initial Value
-              //   value: selected,
-
-              //   // Down Arrow Icon
-              //   icon: const Icon(Icons.keyboard_arrow_down),
-
-              //   // Array list of items
-              //   items: countries.map((String countries) {
-              //     return DropdownMenuItem(
-              //       value: countries,
-              //       child: Text(countries),
-              //     );
-              //   }).toList(),
-              //   // After selecting the desired option,it will
-              //   // change button value to selected value
-              //   onChanged: (String? newValue) {
-              //     setState(() {
-              //       selected = newValue!;
-              //     });
-              //   },
-              // )
             ],
           ),
         ),
